@@ -923,6 +923,12 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
+      initContainers:
+      - name: set-ulimit
+        image: busybox
+        command: ["sh", "-c", "ulimit -c unlimited"]
+        securityContext:
+          privileged: true  # Necessary to change ulimit
       containers:
       - name: server
         securityContext:
@@ -975,4 +981,3 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: adservice
-# [END gke_release_kubernetes_manifests_microservices_demo]
